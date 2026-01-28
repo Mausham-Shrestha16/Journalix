@@ -1,0 +1,89 @@
+@page "/lock"
+@inject Courseworksample.Services.SecurityService Security
+@inject AppLockState LockState
+@inject NavigationManager Nav
+
+<h3>App Lock</h3>
+
+@if (_loading)
+{
+    <p>Loading...</p>
+}
+else if (!_hasPin)
+{
+    <p>Create a PIN (minimum 4 digits). This PIN is stored securely on this device.</p>
+
+    <input type="password" @bind="_pin" placeholder="New PIN" />
+    <br />
+    <br />
+
+    <button @onclick="CreatePin">Set PIN</button>
+
+    <p>@_msg</p>
+}
+else
+{
+    <p>Enter your PIN to unlock the app.</p>
+
+    <input type="password" @bind="_pin" placeholder="PIN" />
+    <br />
+    <br />
+
+    <button @onclick="Unlock">Unlock</button>
+    <button @onclick="LockNow">Lock Now</button>
+
+    <p>@_msg</p>
+}
+
+@code {
+    private bool _loading = true;
+    private bool _hasPin = false;
+    private string _pin = "";
+    private string _msg = "";
+
+    protected override async Task OnInitializedAsync()
+    {
+        _hasPin = await Security.HasPinAsync();
+        _loading = false;
+    }
+
+    private async Task CreatePin()
+    {
+        _msg = "";
+
+        if ((_pin ?? "").Trim().Length < 4)
+        {
+            _msg = "PIN must be at least 4 digits.";
+            return;
+        }
+
+        await Security.SetPinAsync(_pin.Trim());
+        _hasPin = true;
+        LockState.IsUnlocked = true;
+        _msg = "PIN set successfully. App unlocked.";
+        Nav.NavigateTo("/");
+    }
+
+    private async Task Unlock()
+    {
+        _msg = "";
+
+        var ok = await Security.VerifyPinAsync((_pin ?? "").Trim());
+        if (!ok)
+        {
+            _msg = "Incorrect PIN.";
+            return;
+        }
+
+        LockState.IsUnlocked = true;
+        _msg = "Unlocked!";
+        Nav.NavigateTo("/");
+    }
+
+    private Task LockNow()
+    {
+        LockState.IsUnlocked = false;
+        _msg = "App locked.";
+        return Task.CompletedTask;
+    }
+}

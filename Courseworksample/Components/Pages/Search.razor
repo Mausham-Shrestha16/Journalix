@@ -1,0 +1,76 @@
+@page "/search"
+@inject JournalRepository Repo
+@inject AppLockState LockState
+@inject NavigationManager Nav
+
+<h2>Search</h2>
+
+@if (!LockState.IsUnlocked)
+{
+    <p>This app is locked.</p>
+    <button @onclick="GoLock">Go to Unlock</button>
+}
+else
+{
+    <input placeholder="Search title or content..." @bind="_q" />
+    <button @onclick="Run">Search</button>
+
+    @if (_loading)
+    {
+        <p>Searching...</p>
+    }
+    else if (_results.Count == 0 && _hasSearched)
+    {
+        <p>No results.</p>
+    }
+    else if (_results.Count > 0)
+    {
+        <ul>
+            @foreach (var e in _results)
+            {
+                <li>
+                    <b>@e.EntryDate.ToString("yyyy-MM-dd")</b> — @e.Title
+                    <div class="muted">@Short(e.Content)</div>
+                </li>
+            }
+        </ul>
+    }
+}
+
+@code {
+    private string _q = "";
+    private bool _loading = false;
+    private bool _hasSearched = false;
+    private List<JournalEntry> _results = new();
+
+    private void GoLock() => Nav.NavigateTo("/lock");
+
+    private async Task Run()
+    {
+        _hasSearched = true;
+        _loading = true;
+        _results = await Repo.SearchAsync(_q);
+        _loading = false;
+    }
+
+    private static string Short(string s)
+    {
+        if (string.IsNullOrWhiteSpace(s)) return "";
+        s = s.Trim();
+        return s.Length <= 120 ? s : s[..120] + "...";
+    }
+}
+
+<style>
+    input {
+        width: 100%;
+        max-width: 700px;
+        padding: 8px;
+        margin: 8px 0
+    }
+
+    .muted {
+        color: #666;
+        font-size: .9em
+    }
+</style>

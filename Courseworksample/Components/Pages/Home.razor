@@ -1,0 +1,661 @@
+﻿@page "/"
+@page "/entry/{DateStr}"
+
+@using Microsoft.AspNetCore.Components.Forms
+@using Courseworksample.Models
+@inject JournalRepository Repo
+@inject AppLockState LockState
+@inject NavigationManager Nav
+@inject IJSRuntime JS
+
+<div class="page-header">
+    <h2 class="app-title">📔 Journalix</h2>
+    <p class="subtitle">Your Daily Journal - @DateTime.Now.ToString("dddd, MMMM dd, yyyy")</p>
+</div>
+
+@if (!LockState.IsUnlocked)
+{
+    <p>This app is locked.</p>
+    <button @onclick="GoLock">Go to Unlock</button>
+}
+else if (_loading)
+{
+    <p>Loading...</p>
+}
+else if (!string.IsNullOrWhiteSpace(_error))
+{
+    <div class="errorbox">
+        <b>Home page crashed:</b>
+        <div style="white-space: pre-wrap">@_error</div>
+        <button @onclick="Retry">Retry</button>
+    </div>
+}
+else
+{
+    <div class="card">
+        <label>Date</label>
+        <input type="date"
+               value="@_selectedDate.ToString("yyyy-MM-dd")"
+               class="form-control date-input"
+               @onchange="OnDateChangedFromInput" />
+
+        <label>Title</label>
+        <input class="form-control" @bind="_entry.Title" />
+
+        <label>Journal Content</label>
+        <div id="editor-container">
+            <div id="quill-editor-@_editorId"></div>
+        </div>
+
+        <label>Primary Mood * (Required)</label>
+        <select class="form-control" @bind="_entry.PrimaryMood">
+            <option value="">-- Select Primary Mood --</option>
+            @foreach (var category in MoodHelper.MoodsByCategory)
+            {
+                <optgroup label="@category.Key">
+                    @foreach (var mood in category.Value)
+                    {
+                        <option value="@mood">@mood</option>
+                    }
+                </optgroup>
+            }
+        </select>
+
+        <label>Secondary Mood 1 (Optional)</label>
+        <select class="form-control" @bind="_entry.SecondaryMood1">
+            <option value="">-- None --</option>
+            @foreach (var mood in MoodHelper.AllMoods)
+            {
+                <option value="@mood">@mood</option>
+            }
+        </select>
+
+        <label>Secondary Mood 2 (Optional)</label>
+        <select class="form-control" @bind="_entry.SecondaryMood2">
+            <option value="">-- None --</option>
+            @foreach (var mood in MoodHelper.AllMoods)
+            {
+                <option value="@mood">@mood</option>
+            }
+        </select>
+
+        <label>Category</label>
+        <input class="form-control" @bind="_entry.Category" />
+
+        <label>Tags (comma separated)</label>
+        <input class="form-control" @bind="_tagsCsv" placeholder="Work, Health, Study" />
+
+        <div class="row">
+            <button @onclick="Save">Save</button>
+
+            @if (!_confirmDelete)
+            {
+                <button @onclick="Delete">Delete</button>
+            }
+            else
+            {
+                <button @onclick="Delete">Yes, Delete</button>
+                <button @onclick="CancelDelete">Cancel</button>
+            }
+        </div>
+
+        <p>@_msg</p>
+    </div>
+}
+
+@code {
+    [Parameter] public string? DateStr { get; set; }
+
+    private bool _loading = true;
+    private string _error = "";
+    private string _msg = "";
+    private string _tagsCsv = "";
+    private bool _confirmDelete = false;
+    private DateTime _selectedDate = DateTime.Today;
+
+    // ✅ Quill state
+    private bool _editorInitialized = false;
+    private bool _editorInitializing = false; // ✅ prevents multiple toolbars
+    private string _editorId = Guid.NewGuid().ToString();
+
+    private JournalEntry _entry = new()
+    {
+        EntryDate = DateTime.Today,
+        Category = "General",
+        PrimaryMood = "Calm"
+    };
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (!LockState.IsUnlocked)
+        {
+            _loading = false;
+            return;
+        }
+
+        if (!string.IsNullOrWhiteSpace(DateStr) && DateTime.TryParse(DateStr, out var parsed))
+        {
+            await SafeLoad(parsed.Date);
+            return;
+        }
+
+        await SafeLoad(DateTime.Today);
+    }
+
+    // ✅ FIX: prevent Quill from initializing multiple times (stacked toolbars)
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!LockState.IsUnlocked) return;
+
+        if (_editorInitialized || _editorInitializing) return;
+
+        _editorInitializing = true;
+
+        try
+        {
+            await Task.Delay(150); // small DOM wait
+            await InitializeQuillEditor();
+            _editorInitialized = true;
+        }
+        finally
+        {
+            _editorInitializing = false;
+        }
+    }
+
+    private async Task InitializeQuillEditor()
+    {
+        try
+        {
+            var editorSelector = $"#quill-editor-{_editorId}";
+            var editorExists = await JS.InvokeAsync<bool>("eval", $"document.querySelector('{editorSelector}') !== null");
+
+            if (!editorExists)
+                await Task.Delay(200);
+
+            await JS.InvokeVoidAsync("eval", $@"
+                (function() {{
+                    var editorId = 'quill-editor-{_editorId}';
+
+                    // Remove existing editor if any
+                    if (window.quillEditor) {{
+                        try {{
+                            var oldContainer = window.quillEditor.container;
+                            if (oldContainer && oldContainer.parentNode) {{
+                                oldContainer.innerHTML = '';
+                            }}
+                        }} catch(e) {{}}
+                        window.quillEditor = null;
+                    }}
+
+                    var element = document.getElementById(editorId);
+                    if (!element) {{
+                        console.error('Quill editor element not found:', editorId);
+                        return;
+                    }}
+
+                    if (typeof Quill === 'undefined') {{
+                        console.error('Quill is not loaded');
+                        return;
+                    }}
+
+                    var toolbarOptions = [
+                        [{{ 'header': [1, 2, 3, 4, 5, 6, false] }}],
+                        ['bold', 'italic', 'underline', 'strike'],
+                        [{{ 'list': 'ordered'}}, {{ 'list': 'bullet' }}],
+                        [{{ 'indent': '-1'}}, {{ 'indent': '+1' }}],
+                        [{{ 'color': [] }}, {{ 'background': [] }}],
+                        [{{ 'align': [] }}],
+                        ['link', 'image'],
+                        ['clean']
+                    ];
+
+                    window.quillEditor = new Quill('#' + editorId, {{
+                        theme: 'snow',
+                        modules: {{
+                            toolbar: toolbarOptions
+                        }},
+                        placeholder: 'Write your journal entry here...'
+                    }});
+
+                    function applyEditorTheme() {{
+                        var editor = document.querySelector('#' + editorId + ' .ql-editor');
+                        var toolbar = document.querySelector('#' + editorId + ' .ql-toolbar');
+                        var container = document.querySelector('#' + editorId);
+
+                        if (editor) {{
+                            var styles = getComputedStyle(document.documentElement);
+                            var inputBg = styles.getPropertyValue('--input-bg').trim();
+                            var textColor = styles.getPropertyValue('--text-color').trim();
+                            var borderColor = styles.getPropertyValue('--border-color').trim();
+
+                            editor.style.backgroundColor = inputBg;
+                            editor.style.color = textColor;
+
+                            if (toolbar) {{
+                                toolbar.style.backgroundColor = inputBg;
+                                toolbar.style.borderColor = borderColor;
+                            }}
+
+                            if (container) {{
+                                container.style.backgroundColor = inputBg;
+                                container.style.borderColor = borderColor;
+                            }}
+
+                            var toolbarButtons = toolbar ? toolbar.querySelectorAll('.ql-stroke') : [];
+                            toolbarButtons.forEach(function(btn) {{
+                                btn.style.stroke = textColor;
+                            }});
+
+                            var toolbarFills = toolbar ? toolbar.querySelectorAll('.ql-fill') : [];
+                            toolbarFills.forEach(function(btn) {{
+                                btn.style.fill = textColor;
+                            }});
+
+                            var toolbarPickers = toolbar ? toolbar.querySelectorAll('.ql-picker-label') : [];
+                            toolbarPickers.forEach(function(picker) {{
+                                picker.style.color = textColor;
+                            }});
+                        }}
+                    }}
+
+                    setTimeout(applyEditorTheme, 100);
+
+                    if (!window.quillThemeObserver) {{
+                        window.quillThemeObserver = new MutationObserver(function(mutations) {{
+                            applyEditorTheme();
+                        }});
+
+                        var pageElement = document.querySelector('.page');
+                        if (pageElement) {{
+                            window.quillThemeObserver.observe(pageElement, {{ attributes: true, attributeFilter: ['class'] }});
+                        }}
+                    }}
+
+                    console.log('Quill editor initialized successfully');
+                }})();
+            ");
+
+            // Load existing content if any
+            if (!string.IsNullOrWhiteSpace(_entry.Content))
+            {
+                await Task.Delay(150);
+                await SetEditorContent(_entry.Content);
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error initializing Quill: {ex.Message}");
+            _error = $"Editor initialization failed: {ex.Message}";
+        }
+    }
+
+    private async Task SetEditorContent(string htmlContent)
+    {
+        if (!_editorInitialized) return;
+
+        try
+        {
+            var safeContent = htmlContent
+                .Replace("\\", "\\\\")
+                .Replace("'", "\\'")
+                .Replace("\n", "\\n")
+                .Replace("\r", "");
+
+            await JS.InvokeVoidAsync("eval", $@"
+                if(window.quillEditor && window.quillEditor.root) {{
+                    window.quillEditor.root.innerHTML = '{safeContent}';
+                }}
+            ");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error setting content: {ex.Message}");
+        }
+    }
+
+    private async Task<string> GetEditorContent()
+    {
+        if (!_editorInitialized) return "";
+
+        try
+        {
+            var html = await JS.InvokeAsync<string>("eval", @"
+                (function() {
+                    if (window.quillEditor && window.quillEditor.root) {
+                        return window.quillEditor.root.innerHTML;
+                    }
+                    return '';
+                })()
+            ");
+            return html ?? "";
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error getting content: {ex.Message}");
+            return "";
+        }
+    }
+
+    private void GoLock() => Nav.NavigateTo("/lock");
+
+    private async Task Retry()
+    {
+        if (!LockState.IsUnlocked) return;
+
+        _editorInitialized = false;
+        _editorInitializing = false;
+        _editorId = Guid.NewGuid().ToString();
+
+        await SafeLoad(_selectedDate);
+    }
+
+    private async Task OnDateChangedFromInput(ChangeEventArgs e)
+    {
+        if (!LockState.IsUnlocked) return;
+        if (DateTime.TryParse(e.Value?.ToString(), out var newDate))
+        {
+            _selectedDate = newDate.Date;
+            await SafeLoad(_selectedDate.Date);
+            var ds = _selectedDate.ToString("yyyy-MM-dd");
+            Nav.NavigateTo("/entry/" + ds, forceLoad: false);
+        }
+    }
+
+    private async Task SafeLoad(DateTime date)
+    {
+        _loading = true;
+        _error = "";
+        _msg = "";
+
+        try
+        {
+            await Load(date);
+        }
+        catch (Exception ex)
+        {
+            _error = ex.ToString();
+        }
+        finally
+        {
+            _loading = false;
+            StateHasChanged();
+        }
+    }
+
+    private async Task Load(DateTime date)
+    {
+        _confirmDelete = false;
+        _selectedDate = date.Date;
+
+        var existing = await Repo.GetByDateAsync(_selectedDate);
+
+        if (existing is null)
+        {
+            _entry = new JournalEntry
+            {
+                EntryDate = _selectedDate,
+                Category = "General",
+                PrimaryMood = "Calm"
+            };
+            _tagsCsv = "";
+
+            if (_editorInitialized)
+            {
+                await JS.InvokeVoidAsync("eval", @"
+                    if(window.quillEditor) {
+                        window.quillEditor.setText('');
+                    }
+                ");
+            }
+        }
+        else
+        {
+            _entry = existing;
+            var tags = await Repo.GetTagsAsync(existing.Id);
+            _tagsCsv = string.Join(", ", tags);
+
+            if (_editorInitialized && !string.IsNullOrWhiteSpace(_entry.Content))
+            {
+                await SetEditorContent(_entry.Content);
+            }
+        }
+    }
+
+    private async Task Save()
+    {
+        _msg = "";
+        _error = "";
+        _confirmDelete = false;
+
+        try
+        {
+            if (!LockState.IsUnlocked)
+            {
+                _msg = "Locked. Please unlock first.";
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(_entry.PrimaryMood))
+            {
+                _msg = "Primary mood is required.";
+                return;
+            }
+
+            if (_editorInitialized)
+            {
+                _entry.Content = await GetEditorContent();
+            }
+
+            _entry.EntryDate = _selectedDate.Date;
+
+            var saved = await Repo.UpsertAsync(_entry);
+
+            var tags = (_tagsCsv ?? "")
+                .Split(',', StringSplitOptions.RemoveEmptyEntries)
+                .Select(x => x.Trim());
+
+            await Repo.SetTagsAsync(saved.Id, tags);
+
+            _msg = "Saved " + saved.EntryDate.ToString("yyyy-MM-dd") + ".";
+            await SafeLoad(saved.EntryDate);
+        }
+        catch (Exception ex)
+        {
+            _error = ex.ToString();
+        }
+    }
+
+    private async Task Delete()
+    {
+        _msg = "";
+        _error = "";
+
+        try
+        {
+            if (!LockState.IsUnlocked)
+            {
+                _msg = "Locked. Please unlock first.";
+                return;
+            }
+
+            if (!_confirmDelete)
+            {
+                _confirmDelete = true;
+                _msg = "Are you sure you want to delete this entry?";
+                return;
+            }
+
+            var rows = await Repo.DeleteByDateAsync(_selectedDate.Date);
+            _msg = rows > 0 ? "Deleted." : "Nothing to delete.";
+
+            _confirmDelete = false;
+
+            await SafeLoad(_selectedDate.Date);
+
+            var ds = _selectedDate.ToString("yyyy-MM-dd");
+            Nav.NavigateTo("/entry/" + ds, forceLoad: false);
+        }
+        catch (Exception ex)
+        {
+            _error = ex.ToString();
+        }
+    }
+
+    private void CancelDelete()
+    {
+        _confirmDelete = false;
+        _msg = "Delete cancelled.";
+    }
+
+    public void Dispose()
+    {
+        try
+        {
+            JS.InvokeVoidAsync("eval", @"
+                if (window.quillEditor) {
+                    window.quillEditor = null;
+                }
+            ");
+        }
+        catch { }
+    }
+}
+
+<style>
+    .page-header {
+        margin-bottom: 25px;
+        padding: 20px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+    }
+
+    .app-title {
+        margin: 0;
+        color: #ffffff !important;
+        font-size: 2em;
+        font-weight: 700;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    .subtitle {
+        margin: 8px 0 0 0;
+        color: rgba(255, 255, 255, 0.95) !important;
+        font-size: 1.05em;
+        font-weight: 500;
+    }
+
+    .card {
+        border: 1px solid var(--border-color);
+        border-radius: 10px;
+        padding: 12px;
+        max-width: 1200px;
+        background: var(--card-bg);
+    }
+
+    label {
+        display: block;
+        margin-top: 10px;
+        font-weight: 600;
+        color: var(--text-color);
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 8px;
+        margin-top: 4px;
+        border: 1px solid var(--border-color);
+        border-radius: 6px;
+        background: var(--input-bg);
+        color: var(--text-color);
+    }
+
+    /* ✅ Date input: keep the calendar icon visible */
+    .date-input {
+        width: 100%;
+        padding: 8px;
+        margin-top: 4px;
+        border: 1px solid var(--border-color);
+        border-radius: 6px;
+        background: var(--input-bg);
+        color: var(--text-color);
+    }
+
+    #editor-container {
+        margin-top: 8px;
+        margin-bottom: 12px;
+    }
+
+    [id^="quill-editor-"] {
+        border: 1px solid var(--border-color);
+        border-radius: 4px;
+        background: var(--input-bg);
+        min-height: 350px;
+    }
+
+        [id^="quill-editor-"] .ql-toolbar {
+            background: var(--input-bg);
+            border-color: var(--border-color);
+            border-top-left-radius: 4px;
+            border-top-right-radius: 4px;
+        }
+
+        [id^="quill-editor-"] .ql-container {
+            background: var(--input-bg);
+            border-color: var(--border-color);
+            border-bottom-left-radius: 4px;
+            border-bottom-right-radius: 4px;
+        }
+
+        [id^="quill-editor-"] .ql-editor {
+            background: var(--input-bg) !important;
+            color: var(--text-color) !important;
+            min-height: 300px;
+        }
+
+        [id^="quill-editor-"] .ql-stroke {
+            stroke: var(--text-color) !important;
+        }
+
+        [id^="quill-editor-"] .ql-fill {
+            fill: var(--text-color) !important;
+        }
+
+        [id^="quill-editor-"] .ql-picker-label {
+            color: var(--text-color) !important;
+        }
+
+        [id^="quill-editor-"] .ql-picker-options {
+            background: var(--input-bg);
+            border-color: var(--border-color);
+        }
+
+    .row {
+        display: flex;
+        gap: 10px;
+        margin-top: 12px;
+    }
+
+        .row button {
+            padding: 8px 16px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            background: var(--button-bg);
+            color: var(--button-text);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+            .row button:hover {
+                background: var(--button-hover);
+            }
+
+    .errorbox {
+        border: 1px solid #f5c2c7;
+        background: #f8d7da;
+        padding: 12px;
+        border-radius: 10px;
+        max-width: 900px;
+    }
+</style>

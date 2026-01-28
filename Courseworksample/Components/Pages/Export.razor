@@ -1,0 +1,137 @@
+@page "/export"
+@using Microsoft.AspNetCore.Components.Forms
+@inject JournalRepository Repo
+@inject AppLockState LockState
+@inject NavigationManager Nav
+
+<h2>Export / Import</h2>
+
+@if (!LockState.IsUnlocked)
+{
+    <p>This app is locked.</p>
+    <button @onclick="GoLock">Go to Unlock</button>
+}
+else
+{
+    <p>Export all entries or import from a JSON backup file.</p>
+
+    <div class="row">
+        <button @onclick="ExportCsv">Export CSV</button>
+        <button @onclick="ExportJson">Export JSON</button>
+        <button @onclick="ExportPdf">Export PDF</button>
+    </div>
+
+    <hr />
+
+    <h4>Import JSON</h4>
+
+    <InputFile OnChange="OnFileSelected" accept=".json" />
+    <div class="row" style="margin-top:10px;">
+        <button @onclick="ImportJson" disabled="@(_selectedFile is null)">Import Selected File</button>
+    </div>
+
+    <p class="status">@_msg</p>
+}
+
+@code {
+    private string _msg = "";
+    private IBrowserFile? _selectedFile;
+
+    private void GoLock() => Nav.NavigateTo("/lock");
+
+    private async Task ExportCsv()
+    {
+        try
+        {
+            var csv = await Repo.ExportToCsvAsync();
+            var path = BuildPath("csv");
+            await File.WriteAllTextAsync(path, csv);
+            _msg = $"CSV exported:\n{path}";
+        }
+        catch (Exception ex)
+        {
+            _msg = $"Export failed: {ex.Message}";
+        }
+    }
+
+    private async Task ExportJson()
+    {
+        try
+        {
+            var json = await Repo.ExportToJsonAsync();
+            var path = BuildPath("json");
+            await File.WriteAllTextAsync(path, json);
+            _msg = $"JSON exported:\n{path}";
+        }
+        catch (Exception ex)
+        {
+            _msg = $"Export failed: {ex.Message}";
+        }
+    }
+
+    private async Task ExportPdf()
+    {
+        try
+        {
+            var pdfBytes = await Repo.ExportToPdfBytesAsync();
+            var path = BuildPath("pdf");
+            await File.WriteAllBytesAsync(path, pdfBytes);
+            _msg = $"PDF exported:\n{path}";
+        }
+        catch (Exception ex)
+        {
+            _msg = $"Export failed: {ex.Message}";
+        }
+    }
+
+    private string BuildPath(string ext)
+    {
+        return Path.Combine(
+            Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
+            $"journal_export_{DateTime.Now:yyyyMMdd_HHmm}.{ext}"
+        );
+    }
+
+    private void OnFileSelected(InputFileChangeEventArgs e)
+    {
+        _selectedFile = e.File;
+        _msg = _selectedFile is null ? "" : $"Selected: {_selectedFile.Name}";
+    }
+
+    private async Task ImportJson()
+    {
+        if (_selectedFile is null) return;
+
+        try
+        {
+            // read file text
+            using var stream = _selectedFile.OpenReadStream(maxAllowedSize: 10 * 1024 * 1024);
+            using var reader = new StreamReader(stream);
+            var json = await reader.ReadToEndAsync();
+
+            // import into SQLite
+            var count = await Repo.ImportFromJsonAsync(json);
+
+            _msg = $"Imported {count} entries successfully.";
+        }
+        catch (Exception ex)
+        {
+            _msg = $"Import failed: {ex.Message}";
+        }
+    }
+}
+
+<style>
+    .row {
+        display: flex;
+        gap: 12px;
+        margin-top: 16px;
+        flex-wrap: wrap;
+    }
+
+    .status {
+        margin-top: 14px;
+        white-space: pre-wrap;
+        font-size: 0.9em;
+    }
+</style>

@@ -1,0 +1,120 @@
+﻿@inherits LayoutComponentBase
+@using Courseworksample.Services
+@inject ThemeService ThemeService
+@inject AuthService AuthService
+@inject NavigationManager Nav
+@implements IDisposable
+
+@if (IsAuthPage())
+{
+    <!-- Don't show sidebar/navbar on auth pages -->
+    <div class="page @ThemeService.GetThemeClass()">
+        @Body
+    </div>
+}
+else if (!AuthService.IsAuthenticated)
+{
+    <!-- Redirect to login if not authenticated -->
+    <div style="display:none;">@(RedirectToLogin())</div>
+}
+else
+{
+    <!-- Normal layout with sidebar -->
+    <div class="page @ThemeService.GetThemeClass()">
+        <div class="sidebar">
+            <NavMenu />
+        </div>
+
+        <main>
+            <div class="top-row px-4">
+                <div class="user-info">
+                    👤 @AuthService.CurrentUser?.Username
+                    <button class="btn-logout" @onclick="HandleLogout">Logout</button>
+                </div>
+            </div>
+
+            <article class="content px-4">
+                @Body
+            </article>
+        </main>
+    </div>
+}
+
+@code {
+    protected override void OnInitialized()
+    {
+        ThemeService.OnThemeChanged += OnThemeChanged;
+        AuthService.OnAuthStateChanged += OnAuthStateChanged;
+        
+        // Redirect if not authenticated and not on auth page
+        if (!AuthService.IsAuthenticated && !IsAuthPage())
+        {
+            Nav.NavigateTo("/login", true);
+        }
+    }
+
+    private void OnThemeChanged()
+    {
+        StateHasChanged();
+    }
+
+    private void OnAuthStateChanged()
+    {
+        StateHasChanged();
+    }
+
+    private bool IsAuthPage()
+    {
+        var currentUri = Nav.ToAbsoluteUri(Nav.Uri).PathAndQuery;
+        return currentUri.StartsWith("/login") || currentUri.StartsWith("/register");
+    }
+
+    private string RedirectToLogin()
+    {
+        if (!AuthService.IsAuthenticated && !IsAuthPage())
+        {
+            Nav.NavigateTo("/login", true);
+        }
+        return string.Empty;
+    }
+
+    private void HandleLogout()
+    {
+        AuthService.Logout();
+        Nav.NavigateTo("/login");
+    }
+
+    public void Dispose()
+    {
+        ThemeService.OnThemeChanged -= OnThemeChanged;
+        AuthService.OnAuthStateChanged -= OnAuthStateChanged;
+    }
+}
+
+<style>
+    .user-info {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        margin-left: auto;
+        color: var(--text-color);
+        font-weight: 500;
+    }
+
+    .btn-logout {
+        padding: 6px 16px;
+        background: #dc3545;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 0.9em;
+        font-weight: 500;
+        transition: all 0.2s;
+    }
+
+    .btn-logout:hover {
+        background: #c82333;
+        transform: translateY(-1px);
+    }
+</style>

@@ -1,0 +1,148 @@
+@page "/filters"
+@inject JournalRepository Repo
+@inject AppLockState LockState
+@inject NavigationManager Nav
+
+<h2>Filter Entries</h2>
+
+@if (!LockState.IsUnlocked)
+{
+    <p>This app is locked.</p>
+    <button @onclick="GoLock">Go to Unlock</button>
+}
+else
+{
+    <div class="card">
+        <label>Category</label>
+        <select @bind="_selectedCategory">
+            <option value="">(All)</option>
+            @foreach (var c in _categories)
+            {
+                <option value="@c">@c</option>
+            }
+        </select>
+
+        <label>Primary Mood</label>
+        <select @bind="_selectedMood">
+            <option value="">(All)</option>
+            @foreach (var m in _moods)
+            {
+                <option value="@m">@m</option>
+            }
+        </select>
+
+        <label>Tag</label>
+        <select @bind="_selectedTag">
+            <option value="">(All)</option>
+            @foreach (var t in _tags)
+            {
+                <option value="@t">@t</option>
+            }
+        </select>
+
+        <div class="row">
+            <button @onclick="Apply">Apply Filters</button>
+            <button @onclick="Clear">Clear</button>
+        </div>
+    </div>
+
+    <hr />
+
+    @if (_loading)
+    {
+        <p>Loading results...</p>
+    }
+    else if (_results.Count == 0)
+    {
+        <p>No matching entries.</p>
+    }
+    else
+    {
+        <ul>
+            @foreach (var e in _results)
+            {
+                <li>
+                    <b>@e.EntryDate.ToString("yyyy-MM-dd")</b> — @e.Title
+                    <div class="muted">
+                        Mood: @e.PrimaryMood | Category: @e.Category | Words: @e.WordCount
+                    </div>
+                </li>
+            }
+        </ul>
+    }
+}
+
+@code {
+    private bool _loading = false;
+
+    private List<string> _categories = new();
+    private List<string> _moods = new();
+    private List<string> _tags = new();
+
+    private string _selectedCategory = "";
+    private string _selectedMood = "";
+    private string _selectedTag = "";
+
+    private List<JournalEntry> _results = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (!LockState.IsUnlocked) return;
+
+        _categories = await Repo.GetAllCategoriesAsync();
+        _moods = await Repo.GetAllMoodsAsync();
+        _tags = await Repo.GetAllTagsAsync();
+    }
+
+    private async Task Apply()
+    {
+        _loading = true;
+        _results = await Repo.FilterAsync(
+            _selectedCategory,
+            _selectedMood,
+            _selectedTag);
+        _loading = false;
+    }
+
+    private void Clear()
+    {
+        _selectedCategory = "";
+        _selectedMood = "";
+        _selectedTag = "";
+        _results.Clear();
+    }
+
+    private void GoLock() => Nav.NavigateTo("/lock");
+}
+
+<style>
+    .card {
+        border: 1px solid #ddd;
+        border-radius: 12px;
+        padding: 12px;
+        max-width: 500px;
+    }
+
+    label {
+        display: block;
+        margin-top: 10px;
+        font-weight: 600;
+    }
+
+    select {
+        width: 100%;
+        padding: 8px;
+        margin-top: 4px;
+    }
+
+    .row {
+        display: flex;
+        gap: 10px;
+        margin-top: 12px;
+    }
+
+    .muted {
+        color: #666;
+        font-size: 0.9em;
+    }
+</style>

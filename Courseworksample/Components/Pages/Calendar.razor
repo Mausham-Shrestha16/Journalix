@@ -1,0 +1,596 @@
+﻿@page "/calendar"
+@inject JournalRepository Repo
+@inject AppLockState LockState
+@inject NavigationManager Nav
+
+<h2>Calendar View</h2>
+
+@if (!LockState.IsUnlocked)
+{
+    <p>This app is locked.</p>
+    <button @onclick="GoLock">Go to Unlock</button>
+}
+else if (_loading)
+{
+    <p>Loading calendar...</p>
+}
+else if (!string.IsNullOrWhiteSpace(_error))
+{
+    <div class="errorbox">
+        <b>Calendar page crashed:</b>
+        <div style="white-space: pre-wrap">@_error</div>
+        <button @onclick="Reload">Reload</button>
+    </div>
+}
+else
+{
+    <div class="calendar-container">
+        <!-- Month/Year Navigation -->
+        <div class="calendar-header">
+            <button class="nav-btn" @onclick="PreviousMonth">◀</button>
+            <h3 class="month-year">@_currentMonth.ToString("MMMM yyyy")</h3>
+            <button class="nav-btn" @onclick="NextMonth">▶</button>
+        </div>
+
+        <div class="calendar-actions">
+            <button class="today-btn" @onclick="GoToToday">Today</button>
+        </div>
+
+        <!-- Calendar Grid -->
+        <div class="calendar-grid">
+            <!-- Day headers -->
+            <div class="day-header">Sun</div>
+            <div class="day-header">Mon</div>
+            <div class="day-header">Tue</div>
+            <div class="day-header">Wed</div>
+            <div class="day-header">Thu</div>
+            <div class="day-header">Fri</div>
+            <div class="day-header">Sat</div>
+
+            <!-- Calendar days -->
+            @foreach (var day in _calendarDays)
+            {
+                <div class="@GetDayClass(day)" @onclick="() => SelectDay(day)">
+                    <div class="day-number">@day.Date.Day</div>
+                    @if (day.HasEntry)
+                    {
+                        <div class="entry-indicator" title="Has journal entry">
+                            <span class="mood-emoji">@GetMoodEmoji(day.Mood)</span>
+                        </div>
+                    }
+                    @if (day.IsToday)
+                    {
+                        <div class="today-marker">●</div>
+                    }
+                </div>
+            }
+        </div>
+
+        <!-- Legend -->
+        <div class="legend">
+            <div class="legend-item">
+                <div class="legend-indicator has-entry"></div>
+                <span>Has Entry</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-indicator is-today"></div>
+                <span>Today</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-indicator selected"></div>
+                <span>Selected</span>
+            </div>
+        </div>
+
+        <!-- Summary Stats for Current Month -->
+        <div class="month-stats">
+            <h4>@_currentMonth.ToString("MMMM") Summary</h4>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value">@_entriesThisMonth</div>
+                    <div class="stat-label">Entries</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">@_currentMonthStreak</div>
+                    <div class="stat-label">Days Streak</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">@_totalWordsThisMonth</div>
+                    <div class="stat-label">Words Written</div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    private bool _loading = true;
+    private string _error = "";
+    private DateTime _currentMonth = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1);
+    private List<CalendarDay> _calendarDays = new();
+    private HashSet<DateTime> _entryDates = new();
+    private Dictionary<DateTime, string> _entryMoods = new();
+    private DateTime? _selectedDate = null;
+
+    // Month stats
+    private int _entriesThisMonth = 0;
+    private int _currentMonthStreak = 0;
+    private int _totalWordsThisMonth = 0;
+
+    private void GoLock() => Nav.NavigateTo("/lock");
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (!LockState.IsUnlocked)
+        {
+            _loading = false;
+            return;
+        }
+        await LoadCalendar();
+    }
+
+    private async Task Reload()
+    {
+        if (!LockState.IsUnlocked) return;
+        await LoadCalendar();
+    }
+
+    private async Task LoadCalendar()
+    {
+        _loading = true;
+        _error = "";
+
+        try
+        {
+            // Get all entries to mark dates with entries
+            var allEntries = await Repo.GetAllNewestFirstAsync();
+            _entryDates = allEntries.Select(e => e.EntryDate.Date).ToHashSet();
+            _entryMoods = allEntries.ToDictionary(e => e.EntryDate.Date, e => e.PrimaryMood ?? "");
+
+            // Calculate month stats
+            var monthStart = _currentMonth;
+            var monthEnd = _currentMonth.AddMonths(1).AddDays(-1);
+            var monthEntries = allEntries.Where(e => e.EntryDate >= monthStart && e.EntryDate <= monthEnd).ToList();
+
+            _entriesThisMonth = monthEntries.Count;
+            _totalWordsThisMonth = monthEntries.Sum(e => e.WordCount);
+            _currentMonthStreak = CalculateMonthStreak(monthEntries);
+
+            // Build calendar days
+            BuildCalendarDays();
+        }
+        catch (Exception ex)
+        {
+            _error = ex.ToString();
+        }
+        finally
+        {
+            _loading = false;
+            StateHasChanged();
+        }
+    }
+
+    private void BuildCalendarDays()
+    {
+        _calendarDays.Clear();
+
+        // First day of the month
+        var firstDay = _currentMonth;
+        var lastDay = _currentMonth.AddMonths(1).AddDays(-1);
+
+        // Find the Sunday before or on the first day
+        var startDate = firstDay;
+        while (startDate.DayOfWeek != DayOfWeek.Sunday)
+        {
+            startDate = startDate.AddDays(-1);
+        }
+
+        // Find the Saturday after or on the last day
+        var endDate = lastDay;
+        while (endDate.DayOfWeek != DayOfWeek.Saturday)
+        {
+            endDate = endDate.AddDays(1);
+        }
+
+        // Build all days in the calendar view
+        var currentDate = startDate;
+        while (currentDate <= endDate)
+        {
+            _calendarDays.Add(new CalendarDay
+            {
+                Date = currentDate,
+                IsCurrentMonth = currentDate.Month == _currentMonth.Month,
+                IsToday = currentDate.Date == DateTime.Today,
+                HasEntry = _entryDates.Contains(currentDate.Date),
+                Mood = _entryMoods.GetValueOrDefault(currentDate.Date, "")
+            });
+
+            currentDate = currentDate.AddDays(1);
+        }
+    }
+
+    private int CalculateMonthStreak(List<JournalEntry> monthEntries)
+    {
+        if (monthEntries.Count == 0) return 0;
+
+        var dates = monthEntries.Select(e => e.EntryDate.Date).OrderByDescending(d => d).ToList();
+
+        // Only count streak if it includes today or yesterday
+        var today = DateTime.Today;
+        if (!dates.Contains(today) && !dates.Contains(today.AddDays(-1)))
+            return 0;
+
+        int streak = 0;
+        var checkDate = today;
+
+        foreach (var date in dates)
+        {
+            if (date == checkDate || date == checkDate.AddDays(-1))
+            {
+                streak++;
+                checkDate = date.AddDays(-1);
+            }
+            else if (date < checkDate)
+            {
+                break;
+            }
+        }
+
+        return streak;
+    }
+
+    private string GetDayClass(CalendarDay day)
+    {
+        var classes = new List<string> { "calendar-day" };
+
+        if (!day.IsCurrentMonth)
+            classes.Add("other-month");
+        if (day.IsToday)
+            classes.Add("today");
+        if (day.HasEntry)
+            classes.Add("has-entry");
+        if (_selectedDate.HasValue && day.Date.Date == _selectedDate.Value.Date)
+            classes.Add("selected");
+
+        return string.Join(" ", classes);
+    }
+
+    private string GetMoodEmoji(string mood)
+    {
+        // Return emoji based on mood
+        return mood?.ToLower() switch
+        {
+            "happy" => "😊",
+            "excited" => "🤩",
+            "relaxed" => "😌",
+            "grateful" => "🙏",
+            "confident" => "💪",
+            "calm" => "😐",
+            "thoughtful" => "🤔",
+            "curious" => "🧐",
+            "nostalgic" => "🥹",
+            "bored" => "😑",
+            "sad" => "😢",
+            "angry" => "😠",
+            "stressed" => "😰",
+            "lonely" => "😔",
+            "anxious" => "😟",
+            _ => "📝"
+        };
+    }
+
+    private async Task SelectDay(CalendarDay day)
+    {
+        if (!LockState.IsUnlocked) return;
+
+        _selectedDate = day.Date;
+        StateHasChanged();
+
+        // Navigate to the entry page for this date
+        await Task.Delay(200); // Small delay for visual feedback
+        var dateStr = day.Date.ToString("yyyy-MM-dd");
+        Nav.NavigateTo($"/entry/{dateStr}");
+    }
+
+    private async Task PreviousMonth()
+    {
+        _currentMonth = _currentMonth.AddMonths(-1);
+        await LoadCalendar();
+    }
+
+    private async Task NextMonth()
+    {
+        _currentMonth = _currentMonth.AddMonths(1);
+        await LoadCalendar();
+    }
+
+    private async Task GoToToday()
+    {
+        _currentMonth = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1);
+        _selectedDate = DateTime.Today;
+        await LoadCalendar();
+    }
+
+    // Helper class for calendar days
+    private class CalendarDay
+    {
+        public DateTime Date { get; set; }
+        public bool IsCurrentMonth { get; set; }
+        public bool IsToday { get; set; }
+        public bool HasEntry { get; set; }
+        public string Mood { get; set; } = "";
+    }
+}
+
+<style>
+    .calendar-container {
+        max-width: 1000px;
+        margin: 0 auto;
+    }
+
+    /* Header with month/year navigation */
+    .calendar-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 12px;
+        padding: 12px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border-radius: 12px;
+        color: white;
+    }
+
+    .month-year {
+        margin: 0;
+        font-size: 1.5em;
+        font-weight: 600;
+    }
+
+    .nav-btn {
+        background: rgba(255, 255, 255, 0.2);
+        border: 2px solid white;
+        color: white;
+        padding: 8px 16px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 1.2em;
+        transition: all 0.2s;
+    }
+
+        .nav-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.05);
+        }
+
+    .calendar-actions {
+        display: flex;
+        justify-content: flex-end;
+        margin-bottom: 12px;
+    }
+
+    .today-btn {
+        background: #4f46e5;
+        color: white;
+        border: none;
+        padding: 8px 20px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: all 0.2s;
+    }
+
+        .today-btn:hover {
+            background: #4338ca;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+        }
+
+    /* Calendar grid */
+    .calendar-grid {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 8px;
+        margin-bottom: 20px;
+    }
+
+    .day-header {
+        text-align: center;
+        font-weight: 700;
+        color: #666;
+        padding: 12px;
+        background: #f8f9fa;
+        border-radius: 8px;
+        font-size: 0.9em;
+    }
+
+    .calendar-day {
+        aspect-ratio: 1;
+        border: 2px solid #e5e7eb;
+        border-radius: 12px;
+        padding: 8px;
+        cursor: pointer;
+        transition: all 0.2s;
+        background: white;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+    }
+
+        .calendar-day:hover {
+            border-color: #4f46e5;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.15);
+        }
+
+        .calendar-day.other-month {
+            background: #f9fafb;
+            color: #9ca3af;
+        }
+
+            .calendar-day.other-month .day-number {
+                color: #d1d5db;
+            }
+
+        .calendar-day.today {
+            border-color: #f59e0b;
+            background: #fffbeb;
+        }
+
+        .calendar-day.has-entry {
+            background: linear-gradient(135deg, #e0f2fe 0%, #dbeafe 100%);
+            border-color: #3b82f6;
+        }
+
+            .calendar-day.has-entry:hover {
+                background: linear-gradient(135deg, #bfdbfe 0%, #93c5fd 100%);
+            }
+
+        .calendar-day.selected {
+            border-color: #8b5cf6;
+            background: linear-gradient(135deg, #ede9fe 0%, #ddd6fe 100%);
+            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2);
+        }
+
+    .day-number {
+        font-weight: 700;
+        font-size: 1.1em;
+        margin-bottom: 4px;
+    }
+
+    .entry-indicator {
+        margin-top: auto;
+    }
+
+    .mood-emoji {
+        font-size: 1.5em;
+    }
+
+    .today-marker {
+        position: absolute;
+        top: 4px;
+        right: 6px;
+        color: #f59e0b;
+        font-size: 1.2em;
+    }
+
+    /* Legend */
+    .legend {
+        display: flex;
+        gap: 20px;
+        justify-content: center;
+        margin: 20px 0;
+        padding: 12px;
+        background: #f8f9fa;
+        border-radius: 12px;
+        flex-wrap: wrap;
+    }
+
+    .legend-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 0.9em;
+        color: #666;
+    }
+
+    .legend-indicator {
+        width: 24px;
+        height: 24px;
+        border-radius: 6px;
+        border: 2px solid #e5e7eb;
+    }
+
+        .legend-indicator.has-entry {
+            background: linear-gradient(135deg, #e0f2fe 0%, #dbeafe 100%);
+            border-color: #3b82f6;
+        }
+
+        .legend-indicator.is-today {
+            background: #fffbeb;
+            border-color: #f59e0b;
+        }
+
+        .legend-indicator.selected {
+            background: linear-gradient(135deg, #ede9fe 0%, #ddd6fe 100%);
+            border-color: #8b5cf6;
+        }
+
+    /* Month stats */
+    .month-stats {
+        background: white;
+        border: 1px solid #e5e7eb;
+        border-radius: 12px;
+        padding: 16px;
+        margin-top: 20px;
+    }
+
+        .month-stats h4 {
+            margin: 0 0 12px 0;
+            color: #374151;
+        }
+
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 12px;
+    }
+
+    .stat-card {
+        background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+        border-radius: 10px;
+        padding: 16px;
+        text-align: center;
+    }
+
+    .stat-value {
+        font-size: 2em;
+        font-weight: 700;
+        color: #4f46e5;
+        margin-bottom: 4px;
+    }
+
+    .stat-label {
+        font-size: 0.85em;
+        color: #6b7280;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    /* Error box */
+    .errorbox {
+        border: 1px solid #f5c2c7;
+        background: #f8d7da;
+        padding: 12px;
+        border-radius: 10px;
+        max-width: 900px;
+    }
+
+    /* Responsive design */
+    @@media (max-width: 768px) {
+        .calendar-grid {
+            gap: 4px;
+        }
+
+        .calendar-day {
+            padding: 4px;
+        }
+
+        .day-number {
+            font-size: 0.9em;
+        }
+
+        .mood-emoji {
+            font-size: 1.2em;
+        }
+
+        .month-year {
+            font-size: 1.2em;
+        }
+
+        .nav-btn {
+            padding: 6px 12px;
+        }
+    }
+</style>

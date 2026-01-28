@@ -1,0 +1,302 @@
+﻿@page "/stats"
+@inject JournalRepository Repo
+@inject AppLockState LockState
+@inject NavigationManager Nav
+
+<h2>Stats</h2>
+
+@if (!LockState.IsUnlocked)
+{
+    <p>This app is locked.</p>
+    <button @onclick="GoLock">Go to Unlock</button>
+}
+else if (_loading)
+{
+    <p>Loading...</p>
+}
+else if (!string.IsNullOrWhiteSpace(_error))
+{
+    <div class="errorbox">
+        <b>Stats page crashed:</b>
+        <div style="white-space: pre-wrap">@_error</div>
+        <button @onclick="Reload">Reload</button>
+    </div>
+}
+else
+{
+    <div class="summary">
+        <div class="card">
+            <div class="label">Total Entries</div>
+            <div class="value">@_totalEntries</div>
+        </div>
+
+        <div class="card">
+            <div class="label">Total Words</div>
+            <div class="value">@_totalWords</div>
+        </div>
+
+        <div class="card streak-card">
+            <div class="label">Current Streak</div>
+            <div class="value">@_currentStreak 🔥</div>
+        </div>
+
+        <div class="card">
+            <div class="label">Longest Streak</div>
+            <div class="value">@_longestStreak 🏆</div>
+        </div>
+
+        <div class="card">
+            <div class="label">Missed Days</div>
+            <div class="value">@_missedDays</div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h4>Entries per Month</h4>
+        @if (_perMonth.Count == 0)
+        {
+            <p class="muted">No data yet.</p>
+        }
+        else
+        {
+            @BarChart(_perMonth, maxBars: 12)
+        }
+    </div>
+
+    <div class="section">
+        <h4>Mood Distribution</h4>
+        @if (_moods.Count == 0)
+        {
+            <p class="muted">No moods yet.</p>
+        }
+        else
+        {
+            @BarChart(_moods, maxBars: 10)
+        }
+    </div>
+
+    <div class="section">
+        <h4>Category Distribution</h4>
+        @if (_categories.Count == 0)
+        {
+            <p class="muted">No categories yet.</p>
+        }
+        else
+        {
+            @BarChart(_categories, maxBars: 10)
+        }
+    </div>
+
+    <div class="section">
+        <h4>Top Tags</h4>
+        @if (_tags.Count == 0)
+        {
+            <p class="muted">No tags yet.</p>
+        }
+        else
+        {
+            @BarChart(_tags, maxBars: 12)
+        }
+    </div>
+}
+
+@code {
+    private bool _loading = true;
+    private string _error = "";
+
+    private int _totalEntries;
+    private int _totalWords;
+    private int _currentStreak;
+    private int _longestStreak;
+    private int _missedDays;
+
+    private Dictionary<string, int> _moods = new();
+    private Dictionary<string, int> _categories = new();
+    private Dictionary<string, int> _tags = new();
+    private Dictionary<string, int> _perMonth = new();
+
+    private void GoLock() => Nav.NavigateTo("/lock");
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (!LockState.IsUnlocked) { _loading = false; return; }
+        await Load();
+    }
+
+    private async Task Reload() => await Load();
+
+    private async Task Load()
+    {
+        _loading = true;
+        _error = "";
+
+        try
+        {
+            _totalEntries = await Repo.GetTotalEntriesAsync();
+            _totalWords = await Repo.GetTotalWordsAsync();
+
+            // Get streak data
+            var streaks = await Repo.GetStreaksAsync();
+            _currentStreak = streaks.CurrentStreak;
+            _longestStreak = streaks.LongestStreak;
+            _missedDays = streaks.MissedDays;
+
+            _moods = await Repo.GetMoodCountsAsync();
+            _categories = await Repo.GetCategoryCountsAsync();
+            _tags = await Repo.GetTagCountsAsync();
+            _perMonth = await Repo.GetEntriesPerMonthAsync();
+
+            // Show months in chronological order (oldest -> newest) for nicer chart
+            _perMonth = _perMonth
+                .OrderBy(kv => kv.Key)
+                .ToDictionary(kv => kv.Key, kv => kv.Value);
+
+            // Sort other charts by highest count first
+            _moods = _moods.OrderByDescending(kv => kv.Value).ToDictionary(kv => kv.Key, kv => kv.Value);
+            _categories = _categories.OrderByDescending(kv => kv.Value).ToDictionary(kv => kv.Key, kv => kv.Value);
+            _tags = _tags.OrderByDescending(kv => kv.Value).ToDictionary(kv => kv.Key, kv => kv.Value);
+        }
+        catch (Exception ex)
+        {
+            _error = ex.ToString();
+        }
+        finally
+        {
+            _loading = false;
+            StateHasChanged();
+        }
+    }
+
+    // ---------- Simple bar chart renderer (no libraries) ----------
+    private RenderFragment BarChart(Dictionary<string, int> data, int maxBars) => builder =>
+    {
+        var items = data.Take(maxBars).ToList();
+        var max = items.Count == 0 ? 1 : Math.Max(1, items.Max(x => x.Value));
+
+        int seq = 0;
+        builder.OpenElement(seq++, "div");
+        builder.AddAttribute(seq++, "class", "chart");
+
+        foreach (var kv in items)
+        {
+            var label = kv.Key;
+            var value = kv.Value;
+            var pct = (int)Math.Round((value * 100.0) / max);
+
+            builder.OpenElement(seq++, "div");
+            builder.AddAttribute(seq++, "class", "bar-row");
+
+            builder.OpenElement(seq++, "div");
+            builder.AddAttribute(seq++, "class", "bar-label");
+            builder.AddContent(seq++, label);
+            builder.CloseElement();
+
+            builder.OpenElement(seq++, "div");
+            builder.AddAttribute(seq++, "class", "bar-track");
+
+            builder.OpenElement(seq++, "div");
+            builder.AddAttribute(seq++, "class", "bar-fill");
+            builder.AddAttribute(seq++, "style", $"width:{pct}%;");
+            builder.CloseElement();
+
+            builder.CloseElement(); // track
+
+            builder.OpenElement(seq++, "div");
+            builder.AddAttribute(seq++, "class", "bar-value");
+            builder.AddContent(seq++, value);
+            builder.CloseElement();
+
+            builder.CloseElement(); // row
+        }
+
+        builder.CloseElement(); // chart
+    };
+}
+
+<style>
+    /* summary cards */
+    .summary {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+        margin: 12px 0 18px;
+    }
+
+    .card {
+        border: 1px solid #ddd;
+        border-radius: 12px;
+        padding: 12px 14px;
+        min-width: 160px;
+    }
+
+    .streak-card {
+        background: linear-gradient(135deg, #fff5f5 0%, #ffe5e5 100%);
+        border-color: #ff6b6b;
+    }
+
+    .label {
+        color: #666;
+        font-size: .9em;
+    }
+
+    .value {
+        font-size: 1.6em;
+        font-weight: 700;
+    }
+
+    .section {
+        margin-top: 18px;
+    }
+
+    .muted {
+        color: #666;
+    }
+
+    /* chart */
+    .chart {
+        border: 1px solid #eee;
+        border-radius: 12px;
+        padding: 12px;
+        max-width: 900px;
+    }
+
+    .bar-row {
+        display: grid;
+        grid-template-columns: 170px 1fr 60px;
+        gap: 10px;
+        align-items: center;
+        padding: 6px 0;
+    }
+
+    .bar-label {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .bar-track {
+        height: 14px;
+        border: 1px solid #ddd;
+        border-radius: 999px;
+        overflow: hidden;
+    }
+
+    .bar-fill {
+        height: 100%;
+        background: #4f46e5;
+    }
+
+    .bar-value {
+        text-align: right;
+        font-variant-numeric: tabular-nums;
+    }
+
+    /* error box */
+    .errorbox {
+        border: 1px solid #f5c2c7;
+        background: #f8d7da;
+        padding: 12px;
+        border-radius: 10px;
+        max-width: 900px;
+    }
+</style>

@@ -1,0 +1,580 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\Lenovo\\Documents\\c sharpppp\\Journalix - Your Daily Journaling\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{FC5EDB66-2528-4BB0-8E50-D9EF30859459}|Courseworksample\\Courseworksample.csproj|c:\\users\\lenovo\\documents\\c sharpppp\\journalix - your daily journaling\\courseworksample\\components\\pages\\home.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{FC5EDB66-2528-4BB0-8E50-D9EF30859459}|Courseworksample\\Courseworksample.csproj|solutionrelative:courseworksample\\components\\pages\\home.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FC5EDB66-2528-4BB0-8E50-D9EF30859459}|Courseworksample\\Courseworksample.csproj|c:\\users\\lenovo\\documents\\c sharpppp\\journalix - your daily journaling\\courseworksample\\components\\layout\\navmenu.razor.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{FC5EDB66-2528-4BB0-8E50-D9EF30859459}|Courseworksample\\Courseworksample.csproj|solutionrelative:courseworksample\\components\\layout\\navmenu.razor.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FC5EDB66-2528-4BB0-8E50-D9EF30859459}|Courseworksample\\Courseworksample.csproj|c:\\users\\lenovo\\documents\\c sharpppp\\journalix - your daily journaling\\courseworksample\\components\\layout\\navmenu.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{FC5EDB66-2528-4BB0-8E50-D9EF30859459}|Courseworksample\\Courseworksample.csproj|solutionrelative:courseworksample\\components\\layout\\navmenu.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FC5EDB66-2528-4BB0-8E50-D9EF30859459}|Courseworksample\\Courseworksample.csproj|c:\\users\\lenovo\\documents\\c sharpppp\\journalix - your daily journaling\\courseworksample\\components\\layout\\mainlayout.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{FC5EDB66-2528-4BB0-8E50-D9EF30859459}|Courseworksample\\Courseworksample.csproj|solutionrelative:courseworksample\\components\\layout\\mainlayout.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FC5EDB66-2528-4BB0-8E50-D9EF30859459}|Courseworksample\\Courseworksample.csproj|c:\\users\\lenovo\\documents\\c sharpppp\\journalix - your daily journaling\\courseworksample\\components\\pages\\settings.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{FC5EDB66-2528-4BB0-8E50-D9EF30859459}|Courseworksample\\Courseworksample.csproj|solutionrelative:courseworksample\\components\\pages\\settings.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FC5EDB66-2528-4BB0-8E50-D9EF30859459}|Courseworksample\\Courseworksample.csproj|c:\\users\\lenovo\\documents\\c sharpppp\\journalix - your daily journaling\\courseworksample\\components\\pages\\register.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{FC5EDB66-2528-4BB0-8E50-D9EF30859459}|Courseworksample\\Courseworksample.csproj|solutionrelative:courseworksample\\components\\pages\\register.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FC5EDB66-2528-4BB0-8E50-D9EF30859459}|Courseworksample\\Courseworksample.csproj|c:\\users\\lenovo\\documents\\c sharpppp\\journalix - your daily journaling\\courseworksample\\components\\pages\\login.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{FC5EDB66-2528-4BB0-8E50-D9EF30859459}|Courseworksample\\Courseworksample.csproj|solutionrelative:courseworksample\\components\\pages\\login.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FC5EDB66-2528-4BB0-8E50-D9EF30859459}|Courseworksample\\Courseworksample.csproj|c:\\users\\lenovo\\documents\\c sharpppp\\journalix - your daily journaling\\courseworksample\\data\\appdatabase.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FC5EDB66-2528-4BB0-8E50-D9EF30859459}|Courseworksample\\Courseworksample.csproj|solutionrelative:courseworksample\\data\\appdatabase.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FC5EDB66-2528-4BB0-8E50-D9EF30859459}|Courseworksample\\Courseworksample.csproj|c:\\users\\lenovo\\documents\\c sharpppp\\journalix - your daily journaling\\courseworksample\\mauiprogram.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FC5EDB66-2528-4BB0-8E50-D9EF30859459}|Courseworksample\\Courseworksample.csproj|solutionrelative:courseworksample\\mauiprogram.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FC5EDB66-2528-4BB0-8E50-D9EF30859459}|Courseworksample\\Courseworksample.csproj|c:\\users\\lenovo\\documents\\c sharpppp\\journalix - your daily journaling\\courseworksample\\services\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FC5EDB66-2528-4BB0-8E50-D9EF30859459}|Courseworksample\\Courseworksample.csproj|solutionrelative:courseworksample\\services\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FC5EDB66-2528-4BB0-8E50-D9EF30859459}|Courseworksample\\Courseworksample.csproj|c:\\users\\lenovo\\documents\\c sharpppp\\journalix - your daily journaling\\courseworksample\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FC5EDB66-2528-4BB0-8E50-D9EF30859459}|Courseworksample\\Courseworksample.csproj|solutionrelative:courseworksample\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FC5EDB66-2528-4BB0-8E50-D9EF30859459}|Courseworksample\\Courseworksample.csproj|c:\\users\\lenovo\\documents\\c sharpppp\\journalix - your daily journaling\\courseworksample\\services\\themeservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FC5EDB66-2528-4BB0-8E50-D9EF30859459}|Courseworksample\\Courseworksample.csproj|solutionrelative:courseworksample\\services\\themeservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FC5EDB66-2528-4BB0-8E50-D9EF30859459}|Courseworksample\\Courseworksample.csproj|c:\\users\\lenovo\\documents\\c sharpppp\\journalix - your daily journaling\\courseworksample\\components\\layout\\mainlayout.razor.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{FC5EDB66-2528-4BB0-8E50-D9EF30859459}|Courseworksample\\Courseworksample.csproj|solutionrelative:courseworksample\\components\\layout\\mainlayout.razor.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FC5EDB66-2528-4BB0-8E50-D9EF30859459}|Courseworksample\\Courseworksample.csproj|c:\\users\\lenovo\\documents\\c sharpppp\\journalix - your daily journaling\\courseworksample\\wwwroot\\css\\app.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{FC5EDB66-2528-4BB0-8E50-D9EF30859459}|Courseworksample\\Courseworksample.csproj|solutionrelative:courseworksample\\wwwroot\\css\\app.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Program Files\\dotnet\\sdk\\9.0.307\\Sdks\\Microsoft.NET.Sdk.StaticWebAssets\\targets\\Microsoft.NET.Sdk.StaticWebAssets.Pack.targets||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FC5EDB66-2528-4BB0-8E50-D9EF30859459}|Courseworksample\\Courseworksample.csproj|c:\\users\\lenovo\\documents\\c sharpppp\\journalix - your daily journaling\\courseworksample\\wwwroot\\index.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{FC5EDB66-2528-4BB0-8E50-D9EF30859459}|Courseworksample\\Courseworksample.csproj|solutionrelative:courseworksample\\wwwroot\\index.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Lenovo\\Downloads\\Home_QuillJS.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FC5EDB66-2528-4BB0-8E50-D9EF30859459}|Courseworksample\\Courseworksample.csproj|c:\\users\\lenovo\\documents\\c sharpppp\\journalix - your daily journaling\\courseworksample\\components\\pages\\calendar.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{FC5EDB66-2528-4BB0-8E50-D9EF30859459}|Courseworksample\\Courseworksample.csproj|solutionrelative:courseworksample\\components\\pages\\calendar.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FC5EDB66-2528-4BB0-8E50-D9EF30859459}|Courseworksample\\Courseworksample.csproj|c:\\users\\lenovo\\documents\\c sharpppp\\journalix - your daily journaling\\courseworksample\\components\\_imports.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{FC5EDB66-2528-4BB0-8E50-D9EF30859459}|Courseworksample\\Courseworksample.csproj|solutionrelative:courseworksample\\components\\_imports.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FC5EDB66-2528-4BB0-8E50-D9EF30859459}|Courseworksample\\Courseworksample.csproj|c:\\users\\lenovo\\documents\\c sharpppp\\journalix - your daily journaling\\courseworksample\\components\\routes.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{FC5EDB66-2528-4BB0-8E50-D9EF30859459}|Courseworksample\\Courseworksample.csproj|solutionrelative:courseworksample\\components\\routes.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FC5EDB66-2528-4BB0-8E50-D9EF30859459}|Courseworksample\\Courseworksample.csproj|c:\\users\\lenovo\\documents\\c sharpppp\\journalix - your daily journaling\\courseworksample\\components\\pages\\stats.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{FC5EDB66-2528-4BB0-8E50-D9EF30859459}|Courseworksample\\Courseworksample.csproj|solutionrelative:courseworksample\\components\\pages\\stats.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Lenovo\\Downloads\\Stats_Updated.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FC5EDB66-2528-4BB0-8E50-D9EF30859459}|Courseworksample\\Courseworksample.csproj|c:\\users\\lenovo\\documents\\c sharpppp\\journalix - your daily journaling\\courseworksample\\data\\journalrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FC5EDB66-2528-4BB0-8E50-D9EF30859459}|Courseworksample\\Courseworksample.csproj|solutionrelative:courseworksample\\data\\journalrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FC5EDB66-2528-4BB0-8E50-D9EF30859459}|Courseworksample\\Courseworksample.csproj|c:\\users\\lenovo\\documents\\c sharpppp\\journalix - your daily journaling\\courseworksample\\components\\pages\\filters.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{FC5EDB66-2528-4BB0-8E50-D9EF30859459}|Courseworksample\\Courseworksample.csproj|solutionrelative:courseworksample\\components\\pages\\filters.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FC5EDB66-2528-4BB0-8E50-D9EF30859459}|Courseworksample\\Courseworksample.csproj|c:\\users\\lenovo\\documents\\c sharpppp\\journalix - your daily journaling\\courseworksample\\models\\moodhelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FC5EDB66-2528-4BB0-8E50-D9EF30859459}|Courseworksample\\Courseworksample.csproj|solutionrelative:courseworksample\\models\\moodhelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FC5EDB66-2528-4BB0-8E50-D9EF30859459}|Courseworksample\\Courseworksample.csproj|c:\\users\\lenovo\\documents\\c sharpppp\\journalix - your daily journaling\\courseworksample\\components\\pages\\entries.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{FC5EDB66-2528-4BB0-8E50-D9EF30859459}|Courseworksample\\Courseworksample.csproj|solutionrelative:courseworksample\\components\\pages\\entries.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Lenovo\\Documents\\journal_export_20260123_2151.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FC5EDB66-2528-4BB0-8E50-D9EF30859459}|Courseworksample\\Courseworksample.csproj|c:\\users\\lenovo\\documents\\c sharpppp\\journalix - your daily journaling\\courseworksample\\components\\pages\\export.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{FC5EDB66-2528-4BB0-8E50-D9EF30859459}|Courseworksample\\Courseworksample.csproj|solutionrelative:courseworksample\\components\\pages\\export.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Lenovo\\Documents\\journal_export_20260123_2137.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FC5EDB66-2528-4BB0-8E50-D9EF30859459}|Courseworksample\\Courseworksample.csproj|c:\\users\\lenovo\\documents\\c sharpppp\\journalix - your daily journaling\\courseworksample\\components\\pages\\lock.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{FC5EDB66-2528-4BB0-8E50-D9EF30859459}|Courseworksample\\Courseworksample.csproj|solutionrelative:courseworksample\\components\\pages\\lock.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FC5EDB66-2528-4BB0-8E50-D9EF30859459}|Courseworksample\\Courseworksample.csproj|c:\\users\\lenovo\\documents\\c sharpppp\\journalix - your daily journaling\\courseworksample\\models\\tag.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FC5EDB66-2528-4BB0-8E50-D9EF30859459}|Courseworksample\\Courseworksample.csproj|solutionrelative:courseworksample\\models\\tag.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FC5EDB66-2528-4BB0-8E50-D9EF30859459}|Courseworksample\\Courseworksample.csproj|c:\\users\\lenovo\\documents\\c sharpppp\\journalix - your daily journaling\\courseworksample\\components\\pages\\search.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{FC5EDB66-2528-4BB0-8E50-D9EF30859459}|Courseworksample\\Courseworksample.csproj|solutionrelative:courseworksample\\components\\pages\\search.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FC5EDB66-2528-4BB0-8E50-D9EF30859459}|Courseworksample\\Courseworksample.csproj|c:\\users\\lenovo\\documents\\c sharpppp\\journalix - your daily journaling\\courseworksample\\services\\securityservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FC5EDB66-2528-4BB0-8E50-D9EF30859459}|Courseworksample\\Courseworksample.csproj|solutionrelative:courseworksample\\services\\securityservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FC5EDB66-2528-4BB0-8E50-D9EF30859459}|Courseworksample\\Courseworksample.csproj|c:\\users\\lenovo\\documents\\c sharpppp\\journalix - your daily journaling\\courseworksample\\models\\entrytag.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FC5EDB66-2528-4BB0-8E50-D9EF30859459}|Courseworksample\\Courseworksample.csproj|solutionrelative:courseworksample\\models\\entrytag.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FC5EDB66-2528-4BB0-8E50-D9EF30859459}|Courseworksample\\Courseworksample.csproj|c:\\users\\lenovo\\documents\\c sharpppp\\journalix - your daily journaling\\courseworksample\\models\\journalentry.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FC5EDB66-2528-4BB0-8E50-D9EF30859459}|Courseworksample\\Courseworksample.csproj|solutionrelative:courseworksample\\models\\journalentry.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 2,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "MainLayout.razor",
+              "DocumentMoniker": "C:\\Users\\Lenovo\\Documents\\c sharpppp\\Journalix - Your Daily Journaling\\Courseworksample\\Components\\Layout\\MainLayout.razor",
+              "RelativeDocumentMoniker": "Courseworksample\\Components\\Layout\\MainLayout.razor",
+              "ToolTip": "C:\\Users\\Lenovo\\Documents\\c sharpppp\\Journalix - Your Daily Journaling\\Courseworksample\\Components\\Layout\\MainLayout.razor",
+              "RelativeToolTip": "Courseworksample\\Components\\Layout\\MainLayout.razor",
+              "ViewState": "AgIAAHEAAAAAAAAAAAAAAHcAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-01-27T08:13:29.703Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Settings.razor",
+              "DocumentMoniker": "C:\\Users\\Lenovo\\Documents\\c sharpppp\\Journalix - Your Daily Journaling\\Courseworksample\\Components\\Pages\\Settings.razor",
+              "RelativeDocumentMoniker": "Courseworksample\\Components\\Pages\\Settings.razor",
+              "ToolTip": "C:\\Users\\Lenovo\\Documents\\c sharpppp\\Journalix - Your Daily Journaling\\Courseworksample\\Components\\Pages\\Settings.razor",
+              "RelativeToolTip": "Courseworksample\\Components\\Pages\\Settings.razor",
+              "ViewState": "AgIAAEUBAAAAAAAAAAAawFMBAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-01-27T09:43:38.673Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Home.razor",
+              "DocumentMoniker": "C:\\Users\\Lenovo\\Documents\\c sharpppp\\Journalix - Your Daily Journaling\\Courseworksample\\Components\\Pages\\Home.razor",
+              "RelativeDocumentMoniker": "Courseworksample\\Components\\Pages\\Home.razor",
+              "ToolTip": "C:\\Users\\Lenovo\\Documents\\c sharpppp\\Journalix - Your Daily Journaling\\Courseworksample\\Components\\Pages\\Home.razor",
+              "RelativeToolTip": "Courseworksample\\Components\\Pages\\Home.razor",
+              "ViewState": "AgIAAIACAAAAAAAAAAAswIcCAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-01-23T10:20:30.648Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "NavMenu.razor",
+              "DocumentMoniker": "C:\\Users\\Lenovo\\Documents\\c sharpppp\\Journalix - Your Daily Journaling\\Courseworksample\\Components\\Layout\\NavMenu.razor",
+              "RelativeDocumentMoniker": "Courseworksample\\Components\\Layout\\NavMenu.razor",
+              "ToolTip": "C:\\Users\\Lenovo\\Documents\\c sharpppp\\Journalix - Your Daily Journaling\\Courseworksample\\Components\\Layout\\NavMenu.razor",
+              "RelativeToolTip": "Courseworksample\\Components\\Layout\\NavMenu.razor",
+              "ViewState": "AgIAACUAAAAAAAAAAAAqwDoAAAAGAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-01-23T10:39:00.584Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "NavMenu.razor.css",
+              "DocumentMoniker": "C:\\Users\\Lenovo\\Documents\\c sharpppp\\Journalix - Your Daily Journaling\\Courseworksample\\Components\\Layout\\NavMenu.razor.css",
+              "RelativeDocumentMoniker": "Courseworksample\\Components\\Layout\\NavMenu.razor.css",
+              "ToolTip": "C:\\Users\\Lenovo\\Documents\\c sharpppp\\Journalix - Your Daily Journaling\\Courseworksample\\Components\\Layout\\NavMenu.razor.css",
+              "RelativeToolTip": "Courseworksample\\Components\\Layout\\NavMenu.razor.css",
+              "ViewState": "AgIAACYAAAAAAAAAAAAkwDwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2026-01-26T08:13:23.963Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Register.razor",
+              "DocumentMoniker": "C:\\Users\\Lenovo\\Documents\\c sharpppp\\Journalix - Your Daily Journaling\\Courseworksample\\Components\\Pages\\Register.razor",
+              "RelativeDocumentMoniker": "Courseworksample\\Components\\Pages\\Register.razor",
+              "ToolTip": "C:\\Users\\Lenovo\\Documents\\c sharpppp\\Journalix - Your Daily Journaling\\Courseworksample\\Components\\Pages\\Register.razor",
+              "RelativeToolTip": "Courseworksample\\Components\\Pages\\Register.razor",
+              "ViewState": "AgIAAA8BAAAAAAAAAAAqwBwBAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-01-28T08:13:43.923Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Login.razor",
+              "DocumentMoniker": "C:\\Users\\Lenovo\\Documents\\c sharpppp\\Journalix - Your Daily Journaling\\Courseworksample\\Components\\Pages\\Login.razor",
+              "RelativeDocumentMoniker": "Courseworksample\\Components\\Pages\\Login.razor",
+              "ToolTip": "C:\\Users\\Lenovo\\Documents\\c sharpppp\\Journalix - Your Daily Journaling\\Courseworksample\\Components\\Pages\\Login.razor",
+              "RelativeToolTip": "Courseworksample\\Components\\Pages\\Login.razor",
+              "ViewState": "AgIAAPEAAAAAAAAAAAAqwP4AAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-01-28T08:12:57.648Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "AppDatabase.cs",
+              "DocumentMoniker": "C:\\Users\\Lenovo\\Documents\\c sharpppp\\Journalix - Your Daily Journaling\\Courseworksample\\Data\\AppDatabase.cs",
+              "RelativeDocumentMoniker": "Courseworksample\\Data\\AppDatabase.cs",
+              "ToolTip": "C:\\Users\\Lenovo\\Documents\\c sharpppp\\Journalix - Your Daily Journaling\\Courseworksample\\Data\\AppDatabase.cs",
+              "RelativeToolTip": "Courseworksample\\Data\\AppDatabase.cs",
+              "ViewState": "AgIAABEAAAAAAAAAAAAqwCYAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-23T10:26:00.147Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "MauiProgram.cs",
+              "DocumentMoniker": "C:\\Users\\Lenovo\\Documents\\c sharpppp\\Journalix - Your Daily Journaling\\Courseworksample\\MauiProgram.cs",
+              "RelativeDocumentMoniker": "Courseworksample\\MauiProgram.cs",
+              "ToolTip": "C:\\Users\\Lenovo\\Documents\\c sharpppp\\Journalix - Your Daily Journaling\\Courseworksample\\MauiProgram.cs",
+              "RelativeToolTip": "Courseworksample\\MauiProgram.cs",
+              "ViewState": "AgIAABwAAAAAAAAAAAAQwCwAAAAfAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-23T10:28:42.955Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "AuthService.cs",
+              "DocumentMoniker": "C:\\Users\\Lenovo\\Documents\\c sharpppp\\Journalix - Your Daily Journaling\\Courseworksample\\Services\\AuthService.cs",
+              "RelativeDocumentMoniker": "Courseworksample\\Services\\AuthService.cs",
+              "ToolTip": "C:\\Users\\Lenovo\\Documents\\c sharpppp\\Journalix - Your Daily Journaling\\Courseworksample\\Services\\AuthService.cs",
+              "RelativeToolTip": "Courseworksample\\Services\\AuthService.cs",
+              "ViewState": "AgIAAIAAAAAAAAAAAAAqwJUAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-28T08:12:19.331Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "User.cs",
+              "DocumentMoniker": "C:\\Users\\Lenovo\\Documents\\c sharpppp\\Journalix - Your Daily Journaling\\Courseworksample\\Models\\User.cs",
+              "RelativeDocumentMoniker": "Courseworksample\\Models\\User.cs",
+              "ToolTip": "C:\\Users\\Lenovo\\Documents\\c sharpppp\\Journalix - Your Daily Journaling\\Courseworksample\\Models\\User.cs",
+              "RelativeToolTip": "Courseworksample\\Models\\User.cs",
+              "ViewState": "AgIAAAQAAAAAAAAAAAAqwBkAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-28T08:11:25.136Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "ThemeService.cs",
+              "DocumentMoniker": "C:\\Users\\Lenovo\\Documents\\c sharpppp\\Journalix - Your Daily Journaling\\Courseworksample\\Services\\ThemeService.cs",
+              "RelativeDocumentMoniker": "Courseworksample\\Services\\ThemeService.cs",
+              "ToolTip": "C:\\Users\\Lenovo\\Documents\\c sharpppp\\Journalix - Your Daily Journaling\\Courseworksample\\Services\\ThemeService.cs",
+              "RelativeToolTip": "Courseworksample\\Services\\ThemeService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAEMAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-27T09:43:12.276Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "MainLayout.razor.css",
+              "DocumentMoniker": "C:\\Users\\Lenovo\\Documents\\c sharpppp\\Journalix - Your Daily Journaling\\Courseworksample\\Components\\Layout\\MainLayout.razor.css",
+              "RelativeDocumentMoniker": "Courseworksample\\Components\\Layout\\MainLayout.razor.css",
+              "ToolTip": "C:\\Users\\Lenovo\\Documents\\c sharpppp\\Journalix - Your Daily Journaling\\Courseworksample\\Components\\Layout\\MainLayout.razor.css",
+              "RelativeToolTip": "Courseworksample\\Components\\Layout\\MainLayout.razor.css",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAxAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2026-01-27T09:55:16.615Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "app.css",
+              "DocumentMoniker": "C:\\Users\\Lenovo\\Documents\\c sharpppp\\Journalix - Your Daily Journaling\\Courseworksample\\wwwroot\\css\\app.css",
+              "RelativeDocumentMoniker": "Courseworksample\\wwwroot\\css\\app.css",
+              "ToolTip": "C:\\Users\\Lenovo\\Documents\\c sharpppp\\Journalix - Your Daily Journaling\\Courseworksample\\wwwroot\\css\\app.css",
+              "RelativeToolTip": "Courseworksample\\wwwroot\\css\\app.css",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAEUAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2026-01-27T09:54:30.756Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "Microsoft.NET.Sdk.StaticWebAssets.Pack.targets",
+              "DocumentMoniker": "C:\\Program Files\\dotnet\\sdk\\9.0.307\\Sdks\\Microsoft.NET.Sdk.StaticWebAssets\\targets\\Microsoft.NET.Sdk.StaticWebAssets.Pack.targets",
+              "RelativeDocumentMoniker": "..\\..\\..\\..\\..\\Program Files\\dotnet\\sdk\\9.0.307\\Sdks\\Microsoft.NET.Sdk.StaticWebAssets\\targets\\Microsoft.NET.Sdk.StaticWebAssets.Pack.targets",
+              "ToolTip": "C:\\Program Files\\dotnet\\sdk\\9.0.307\\Sdks\\Microsoft.NET.Sdk.StaticWebAssets\\targets\\Microsoft.NET.Sdk.StaticWebAssets.Pack.targets",
+              "RelativeToolTip": "..\\..\\..\\..\\..\\Program Files\\dotnet\\sdk\\9.0.307\\Sdks\\Microsoft.NET.Sdk.StaticWebAssets\\targets\\Microsoft.NET.Sdk.StaticWebAssets.Pack.targets",
+              "ViewState": "AgIAAFoAAAAAAAAAAAAAAJ8AAAAEAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003801|",
+              "WhenOpened": "2026-01-27T09:19:34.013Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "index.html",
+              "DocumentMoniker": "C:\\Users\\Lenovo\\Documents\\c sharpppp\\Journalix - Your Daily Journaling\\Courseworksample\\wwwroot\\index.html",
+              "RelativeDocumentMoniker": "Courseworksample\\wwwroot\\index.html",
+              "ToolTip": "C:\\Users\\Lenovo\\Documents\\c sharpppp\\Journalix - Your Daily Journaling\\Courseworksample\\wwwroot\\index.html",
+              "RelativeToolTip": "Courseworksample\\wwwroot\\index.html",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAAABYAAAAsAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
+              "WhenOpened": "2026-01-27T07:06:49.745Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "Home_QuillJS.razor",
+              "DocumentMoniker": "C:\\Users\\Lenovo\\Downloads\\Home_QuillJS.razor",
+              "RelativeDocumentMoniker": "..\\..\\..\\Downloads\\Home_QuillJS.razor",
+              "ToolTip": "C:\\Users\\Lenovo\\Downloads\\Home_QuillJS.razor",
+              "RelativeToolTip": "..\\..\\..\\Downloads\\Home_QuillJS.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAALEBAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-01-27T08:52:23.75Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "Calendar.razor",
+              "DocumentMoniker": "C:\\Users\\Lenovo\\Documents\\c sharpppp\\Journalix - Your Daily Journaling\\Courseworksample\\Components\\Pages\\Calendar.razor",
+              "RelativeDocumentMoniker": "Courseworksample\\Components\\Pages\\Calendar.razor",
+              "ToolTip": "C:\\Users\\Lenovo\\Documents\\c sharpppp\\Journalix - Your Daily Journaling\\Courseworksample\\Components\\Pages\\Calendar.razor",
+              "RelativeToolTip": "Courseworksample\\Components\\Pages\\Calendar.razor",
+              "ViewState": "AgIAADECAAAAAAAAAAAswFQCAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-01-27T08:12:57.17Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "_Imports.razor",
+              "DocumentMoniker": "C:\\Users\\Lenovo\\Documents\\c sharpppp\\Journalix - Your Daily Journaling\\Courseworksample\\Components\\_Imports.razor",
+              "RelativeDocumentMoniker": "Courseworksample\\Components\\_Imports.razor",
+              "ToolTip": "C:\\Users\\Lenovo\\Documents\\c sharpppp\\Journalix - Your Daily Journaling\\Courseworksample\\Components\\_Imports.razor",
+              "RelativeToolTip": "Courseworksample\\Components\\_Imports.razor",
+              "ViewState": "AgIAAAEAAAAAAAAAAAAcwAwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-01-23T10:29:18.01Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "Routes.razor",
+              "DocumentMoniker": "C:\\Users\\Lenovo\\Documents\\c sharpppp\\Journalix - Your Daily Journaling\\Courseworksample\\Components\\Routes.razor",
+              "RelativeDocumentMoniker": "Courseworksample\\Components\\Routes.razor",
+              "ToolTip": "C:\\Users\\Lenovo\\Documents\\c sharpppp\\Journalix - Your Daily Journaling\\Courseworksample\\Components\\Routes.razor",
+              "RelativeToolTip": "Courseworksample\\Components\\Routes.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-01-23T10:29:04.339Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "Stats_Updated.razor",
+              "DocumentMoniker": "C:\\Users\\Lenovo\\Downloads\\Stats_Updated.razor",
+              "RelativeDocumentMoniker": "..\\..\\..\\Downloads\\Stats_Updated.razor",
+              "ToolTip": "C:\\Users\\Lenovo\\Downloads\\Stats_Updated.razor",
+              "RelativeToolTip": "..\\..\\..\\Downloads\\Stats_Updated.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-01-27T06:44:25.241Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 24,
+              "Title": "MoodHelper.cs",
+              "DocumentMoniker": "C:\\Users\\Lenovo\\Documents\\c sharpppp\\Journalix - Your Daily Journaling\\Courseworksample\\Models\\MoodHelper.cs",
+              "RelativeDocumentMoniker": "Courseworksample\\Models\\MoodHelper.cs",
+              "ToolTip": "C:\\Users\\Lenovo\\Documents\\c sharpppp\\Journalix - Your Daily Journaling\\Courseworksample\\Models\\MoodHelper.cs",
+              "RelativeToolTip": "Courseworksample\\Models\\MoodHelper.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-27T05:02:58.824Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "Filters.razor",
+              "DocumentMoniker": "C:\\Users\\Lenovo\\Documents\\c sharpppp\\Journalix - Your Daily Journaling\\Courseworksample\\Components\\Pages\\Filters.razor",
+              "RelativeDocumentMoniker": "Courseworksample\\Components\\Pages\\Filters.razor",
+              "ToolTip": "C:\\Users\\Lenovo\\Documents\\c sharpppp\\Journalix - Your Daily Journaling\\Courseworksample\\Components\\Pages\\Filters.razor",
+              "RelativeToolTip": "Courseworksample\\Components\\Pages\\Filters.razor",
+              "ViewState": "AgIAAGMAAAAAAAAAAAAiwJQAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-01-23T10:53:15.317Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "Stats.razor",
+              "DocumentMoniker": "C:\\Users\\Lenovo\\Documents\\c sharpppp\\Journalix - Your Daily Journaling\\Courseworksample\\Components\\Pages\\Stats.razor",
+              "RelativeDocumentMoniker": "Courseworksample\\Components\\Pages\\Stats.razor",
+              "ToolTip": "C:\\Users\\Lenovo\\Documents\\c sharpppp\\Journalix - Your Daily Journaling\\Courseworksample\\Components\\Pages\\Stats.razor",
+              "RelativeToolTip": "Courseworksample\\Components\\Pages\\Stats.razor",
+              "ViewState": "AgIAAN4AAAAAAAAAAAAswC4BAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-01-23T10:46:49.445Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "JournalRepository.cs",
+              "DocumentMoniker": "C:\\Users\\Lenovo\\Documents\\c sharpppp\\Journalix - Your Daily Journaling\\Courseworksample\\Data\\JournalRepository.cs",
+              "RelativeDocumentMoniker": "Courseworksample\\Data\\JournalRepository.cs",
+              "ToolTip": "C:\\Users\\Lenovo\\Documents\\c sharpppp\\Journalix - Your Daily Journaling\\Courseworksample\\Data\\JournalRepository.cs",
+              "RelativeToolTip": "Courseworksample\\Data\\JournalRepository.cs",
+              "ViewState": "AgIAANwBAAAAAAAAAAAswPMBAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-23T10:26:18.416Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 28,
+              "Title": "journal_export_20260123_2137.json",
+              "DocumentMoniker": "C:\\Users\\Lenovo\\Documents\\journal_export_20260123_2137.json",
+              "RelativeDocumentMoniker": "..\\..\\journal_export_20260123_2137.json",
+              "ToolTip": "C:\\Users\\Lenovo\\Documents\\journal_export_20260123_2137.json",
+              "RelativeToolTip": "..\\..\\journal_export_20260123_2137.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAIBJwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-01-23T15:57:09.82Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 25,
+              "Title": "Entries.razor",
+              "DocumentMoniker": "C:\\Users\\Lenovo\\Documents\\c sharpppp\\Journalix - Your Daily Journaling\\Courseworksample\\Components\\Pages\\Entries.razor",
+              "RelativeDocumentMoniker": "Courseworksample\\Components\\Pages\\Entries.razor",
+              "ToolTip": "C:\\Users\\Lenovo\\Documents\\c sharpppp\\Journalix - Your Daily Journaling\\Courseworksample\\Components\\Pages\\Entries.razor",
+              "RelativeToolTip": "Courseworksample\\Components\\Pages\\Entries.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAG8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-01-23T10:24:35.271Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 26,
+              "Title": "journal_export_20260123_2151.json",
+              "DocumentMoniker": "C:\\Users\\Lenovo\\Documents\\journal_export_20260123_2151.json",
+              "RelativeDocumentMoniker": "..\\..\\journal_export_20260123_2151.json",
+              "ToolTip": "C:\\Users\\Lenovo\\Documents\\journal_export_20260123_2151.json",
+              "RelativeToolTip": "..\\..\\journal_export_20260123_2151.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-01-23T16:06:35.412Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 27,
+              "Title": "Export.razor",
+              "DocumentMoniker": "C:\\Users\\Lenovo\\Documents\\c sharpppp\\Journalix - Your Daily Journaling\\Courseworksample\\Components\\Pages\\Export.razor",
+              "RelativeDocumentMoniker": "Courseworksample\\Components\\Pages\\Export.razor",
+              "ToolTip": "C:\\Users\\Lenovo\\Documents\\c sharpppp\\Journalix - Your Daily Journaling\\Courseworksample\\Components\\Pages\\Export.razor",
+              "RelativeToolTip": "Courseworksample\\Components\\Pages\\Export.razor",
+              "ViewState": "AgIAAHEAAAAAAAAAAAAswIkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-01-23T11:00:50.494Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 30,
+              "Title": "Tag.cs",
+              "DocumentMoniker": "C:\\Users\\Lenovo\\Documents\\c sharpppp\\Journalix - Your Daily Journaling\\Courseworksample\\Models\\Tag.cs",
+              "RelativeDocumentMoniker": "Courseworksample\\Models\\Tag.cs",
+              "ToolTip": "C:\\Users\\Lenovo\\Documents\\c sharpppp\\Journalix - Your Daily Journaling\\Courseworksample\\Models\\Tag.cs",
+              "RelativeToolTip": "Courseworksample\\Models\\Tag.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-23T10:26:45.456Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 31,
+              "Title": "Search.razor",
+              "DocumentMoniker": "C:\\Users\\Lenovo\\Documents\\c sharpppp\\Journalix - Your Daily Journaling\\Courseworksample\\Components\\Pages\\Search.razor",
+              "RelativeDocumentMoniker": "Courseworksample\\Components\\Pages\\Search.razor",
+              "ToolTip": "C:\\Users\\Lenovo\\Documents\\c sharpppp\\Journalix - Your Daily Journaling\\Courseworksample\\Components\\Pages\\Search.razor",
+              "RelativeToolTip": "Courseworksample\\Components\\Pages\\Search.razor",
+              "ViewState": "AgIAABkAAAAAAAAAAAAUwEwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-01-23T10:24:52.173Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 29,
+              "Title": "Lock.razor",
+              "DocumentMoniker": "C:\\Users\\Lenovo\\Documents\\c sharpppp\\Journalix - Your Daily Journaling\\Courseworksample\\Components\\Pages\\Lock.razor",
+              "RelativeDocumentMoniker": "Courseworksample\\Components\\Pages\\Lock.razor",
+              "ToolTip": "C:\\Users\\Lenovo\\Documents\\c sharpppp\\Journalix - Your Daily Journaling\\Courseworksample\\Components\\Pages\\Lock.razor",
+              "RelativeToolTip": "Courseworksample\\Components\\Pages\\Lock.razor",
+              "ViewState": "AgIAAEAAAAAAAAAAAAAiwFkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-01-23T10:25:04.035Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 32,
+              "Title": "SecurityService.cs",
+              "DocumentMoniker": "C:\\Users\\Lenovo\\Documents\\c sharpppp\\Journalix - Your Daily Journaling\\Courseworksample\\Services\\SecurityService.cs",
+              "RelativeDocumentMoniker": "Courseworksample\\Services\\SecurityService.cs",
+              "ToolTip": "C:\\Users\\Lenovo\\Documents\\c sharpppp\\Journalix - Your Daily Journaling\\Courseworksample\\Services\\SecurityService.cs",
+              "RelativeToolTip": "Courseworksample\\Services\\SecurityService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-23T10:27:20.996Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 33,
+              "Title": "EntryTag.cs",
+              "DocumentMoniker": "C:\\Users\\Lenovo\\Documents\\c sharpppp\\Journalix - Your Daily Journaling\\Courseworksample\\Models\\EntryTag.cs",
+              "RelativeDocumentMoniker": "Courseworksample\\Models\\EntryTag.cs",
+              "ToolTip": "C:\\Users\\Lenovo\\Documents\\c sharpppp\\Journalix - Your Daily Journaling\\Courseworksample\\Models\\EntryTag.cs",
+              "RelativeToolTip": "Courseworksample\\Models\\EntryTag.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-23T10:26:54.397Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 34,
+              "Title": "JournalEntry.cs",
+              "DocumentMoniker": "C:\\Users\\Lenovo\\Documents\\c sharpppp\\Journalix - Your Daily Journaling\\Courseworksample\\Models\\JournalEntry.cs",
+              "RelativeDocumentMoniker": "Courseworksample\\Models\\JournalEntry.cs",
+              "ToolTip": "C:\\Users\\Lenovo\\Documents\\c sharpppp\\Journalix - Your Daily Journaling\\Courseworksample\\Models\\JournalEntry.cs",
+              "RelativeToolTip": "Courseworksample\\Models\\JournalEntry.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAuwCMAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-23T10:26:40.172Z"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,111 @@
+@page "/entries"
+@inject JournalRepository Repo
+@inject AppLockState LockState
+@inject NavigationManager Nav
+
+<h2>Entries</h2>
+
+@if (!LockState.IsUnlocked)
+{
+    <p>This app is locked.</p>
+    <button @onclick="GoLock">Go to Unlock</button>
+}
+else if (_loading)
+{
+    <p>Loading...</p>
+}
+else
+{
+    <div class="row">
+        <button @onclick="Prev">Prev</button>
+        <span>Page @_page</span>
+        <button @onclick="Next">Next</button>
+    </div>
+
+    @if (_items.Count == 0)
+    {
+        <p>No entries yet.</p>
+    }
+    else
+    {
+        <ul>
+            @foreach (var e in _items)
+            {
+                <li class="entry-item">
+                    <a class="entry-link" href="@($"/entry/{e.EntryDate:yyyy-MM-dd}")">
+                        <b>@e.EntryDate.ToString("yyyy-MM-dd")</b> — @e.Title
+                    </a>
+
+                    <div class="muted">
+                        Mood: @e.PrimaryMood | Words: @e.WordCount
+                    </div>
+                </li>
+            }
+        </ul>
+    }
+}
+
+@code {
+    private bool _loading = true;
+    private int _page = 1;
+    private const int PageSize = 10;
+    private List<JournalEntry> _items = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (!LockState.IsUnlocked) { _loading = false; return; }
+        await Load();
+    }
+
+    private void GoLock() => Nav.NavigateTo("/lock");
+
+    private async Task Load()
+    {
+        _loading = true;
+        _items = await Repo.GetPagedAsync(_page, PageSize);
+        _loading = false;
+    }
+
+    private async Task Prev()
+    {
+        if (_page > 1) _page--;
+        await Load();
+    }
+
+    private async Task Next()
+    {
+        _page++;
+        await Load();
+    }
+}
+
+<style>
+    .row {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        margin-bottom: 12px;
+    }
+
+    .muted {
+        color: #666;
+        font-size: .9em;
+    }
+
+    .entry-item {
+        margin-bottom: 10px;
+        padding: 8px;
+        border: 1px solid #eee;
+        border-radius: 10px;
+    }
+
+    .entry-link {
+        text-decoration: none;
+        color: inherit;
+        display: inline-block;
+    }
+
+        .entry-link:hover {
+            text-decoration: underline;
+        }
+</style>
